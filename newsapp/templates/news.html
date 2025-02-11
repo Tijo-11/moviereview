@@ -1,0 +1,42 @@
+{% extends 'base.html' %}  
+<!-- Extends 'base.html', meaning this template inherits from the base template -->
+
+{% block content %}  
+<!-- Defines a block named 'content' that will be inserted into the base template -->
+<h3>Welcome To Yanthiran News</h3>
+{% for news in newss %}  
+<!-- Loops through the 'newss' list (passed from the view) and assigns each item to 'news' -->
+
+<div class="card mb-3">  
+    <!-- Creates a Bootstrap card with a bottom margin of size 3 -->
+    
+    <div class="row g-0">  
+        <!-- Defines a row with no gutters (g-0 removes spacing between columns) -->
+        
+        <div>  
+            <!-- Placeholder div (can be used for layout adjustments) -->
+
+            <div class="card-body">  
+                <!-- Container for the card content -->
+                
+                <h5 class="card-title">{{ news.headline }}</h5>  
+                <!-- Displays the news headline dynamically -->
+                
+                <p class="card-text">{{ news.body }}</p>  
+                <!-- Displays the news body dynamically -->
+                
+                <p class="card-text">  
+                    <small class="text-muted">{{ news.date }}</small>  
+                    <!-- Displays the news date with a muted text style -->
+                </p>
+                
+            </div>  
+        </div>  
+    </div>  
+</div>  
+
+{% endfor %}  
+<!-- Ends the for loop -->
+
+{% endblock content %}  
+<!-- Ends the content block -->

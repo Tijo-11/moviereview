@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% block content %}
+
+  <style>
+    /* ✅ Fix Banner Image */
+    .banner-container {
+      width: 100%;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .banner-container img {
+      width: 100%;
+      max-height: 350px; /* Adjust banner height */
+      object-fit: cover;
+    }
+
+    /* ✅ Fix Movie Poster Sizes */ 
+    .card-img-top {
+      height: 550px; /* Ensures all images have the same height */
+      object-fit: cover; /* Crops images properly */
+      width: 100%; /* Consistent width */
+    }
+    .card {
+      height: 100%; /* Ensures all cards have equal height */
+      display: flex;
+      flex-direction: column;
+    }
+    .card-body {
+      flex-grow: 1; /* Ensures content expands properly */
+    }
+  </style>
+
+  <!-- ✅ Banner Section -->
+  <div class="banner-container">
+    {% load static %}
+    <img src="{% static 'images/movie_poster.jpg' %}" alt="Banner Image">
+  </div>
+
+  <div class="container">
+    <!-- ✅ Search Movie -->
+    <form action="">
+      <div class="mb-3">
+        <label for="searchMovie" class="form-label">Search for Movie:</label>
+        <input type="text" class="form-control" name="searchMovie">
+      </div>
+      <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    <!-- ✅ Display Search Term -->
+    <p>Searching for {{ searchTerm }}</p>
+    <hr>
+
+    <!-- ✅ Movies List -->
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      {% for movie in movies %}
+        <div class="col">
+          <div class="card">
+            <img class="card-img-top img-fluid" src="{{ movie.image.url }}" alt="{{ movie.title }}">
+            <div class="card-body">
+              <a href="{% url 'detail' movie.id %}">
+                <h2 class="card-title fw-bold">{{ movie.title }}</h2>
+              </a>
+              <p class="card-text">{{ movie.description }}</p>
+              {% if movie.url %}
+                <a href="{{ movie.url }}" class="btn btn-primary">Movie Link</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <br /><br />
+
+    <!-- ✅ Mailing List Signup -->
+    <h2>Join our mailing list:</h2>
+    <form action="{% url 'signup' %}">
+      <div class="mb-3">
+        <label for="email" class="form-label"> Enter your email: </label>
+        <input type="email" class="form-control" name="email" />
+      </div>
+      <button type="submit" class="btn btn-primary">Sign Up</button>
+    </form>
+
+    <!-- ✅ Request Movie Section -->
+    <div class="mt-4 d-flex justify-content-center">
+      <div class="card border-primary shadow-lg bg-light p-3 w-50 w-sm-100">
+        <h5 class="text-center">Don't find the movie you are looking for?</h5>
+        {% if message %}
+        <div id="alertMessage" class="alert alert-info alert-dismissible fade show text-center" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
+        <form method="post">
+          {% csrf_token %}
+          <input type="text" class="form-control mb-2" name="movie_name" placeholder="Movie Name" required>
+          <input type="text" class="form-control mb-2" name="language" placeholder="Language" required>
+          <input type="number" class="form-control mb-2" name="year" placeholder="Year" required>
+          <button type="submit" class="btn btn-primary w-100">Submit</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+{% endblock content %}

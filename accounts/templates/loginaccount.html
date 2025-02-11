@@ -1,0 +1,67 @@
+{% extends 'base.html' %}  <!-- Extends the base template -->
+
+{% block content %}
+<style>
+  /* ✅ Fix Banner Image */
+  .banner-container {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .banner-container img {
+    width: 100%;
+    max-height: 350px; /* Adjust banner height */
+    object-fit: cover;
+  }
+
+  /* ✅ Fix Movie Poster Sizes */ 
+  .card-img-top {
+    height: 550px; /* Ensures all images have the same height */
+    object-fit: cover; /* Crops images properly */
+    width: 100%; /* Consistent width */
+  }
+  .card {
+    height: 100%; /* Ensures all cards have equal height */
+    display: flex;
+    flex-direction: column;
+  }
+  .card-body {
+    flex-grow: 1; /* Ensures content expands properly */
+  }
+</style>
+
+<!-- ✅ Banner Section -->
+<div class="banner-container">
+  {% load static %}
+  <img src="{% static 'images/movie_poster.jpg' %}" alt="Banner Image">
+</div>
+ <div class="card mb-3">  <!-- Bootstrap card with margin-bottom -->
+   <div class="row g-0">  <!-- Bootstrap row with no gutters (removes spacing between columns) -->
+     
+     <div>  
+       <div class="card-body">  <!-- Card body for content -->
+         
+         <h5 class="card-title">Login</h5>  <!-- Form Title -->
+         {% if error %}
+         <div class="alert alert-danger mt-3 " role="alert">
+            {{error}}
+         </div>
+         {% endif %}
+
+         <p class="card-text">
+           <form method="POST">  <!-- Sign-up form with POST method -->
+             {% csrf_token %}  <!-- CSRF token for security -->
+             {{ form.as_p }}  <!-- Renders form fields as paragraphs -->
+             
+             <button type="submit" class="btn btn-primary">  <!-- Submit button -->
+               Login
+             </button>
+           </form>
+         </p>
+
+       </div>
+     </div>
+
+   </div>
+ </div>
+{% endblock content %}

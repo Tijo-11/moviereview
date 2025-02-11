@@ -1,0 +1,33 @@
+{% extends 'base.html' %}  <!-- Extends the base template -->
+
+{% block content %}
+ <div class="card mb-3">  <!-- Bootstrap card with margin-bottom -->
+   <div class="row g-0">  <!-- Bootstrap row with no gutters (removes spacing between columns) -->
+     
+     <div>  
+       <div class="card-body">  <!-- Card body for content -->
+         
+         <h5 class="card-title">Sign Up</h5>  <!-- Form Title -->
+         {% if error %}
+         <div class="alert alert-danger mt-3 " role="alert">
+            {{error}}
+         </div>
+         {% endif %}
+
+         <p class="card-text">
+           <form method="POST">  <!-- Sign-up form with POST method -->
+             {% csrf_token %}  <!-- CSRF token for security -->
+             {{ form.as_p }}  <!-- Renders form fields as paragraphs -->
+             
+             <button type="submit" class="btn btn-primary">  <!-- Submit button -->
+               Sign Up
+             </button>
+           </form>
+         </p>
+
+       </div>
+     </div>
+
+   </div>
+ </div>
+{% endblock content %}

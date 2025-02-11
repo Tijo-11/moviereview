@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Review Home Page</title>
+
+    <!-- ✅ Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+    rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
+    crossorigin="anonymous">
+    <style>
+      .navbar-toggler {
+          cursor: pointer !important;  /* ✅ Forces cursor to pointer */
+      }
+    </style>
+</head>
+
+  <!-- ✅ Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+     <!-- <nav>: Defines a navigation bar -->
+    <!-- class="navbar": Applies Bootstrap's navbar styling -->
+    <!-- class="navbar-expand-lg": Expands the navbar for large (lg) screens and collapses for smaller screens -->
+    <!-- class="navbar-light": Uses a light color scheme for text (dark text on light background) -->
+    <!-- class="bg-light": Sets a light background color for the navbar -->
+    <!-- class="mb-3": Adds a bottom margin of size 3 (Bootstrap spacing utility) -->
+    <div class="container">
+        <!-- Website Brand Name -->
+        <a class="navbar-brand" href="{% url 'home' %}">
+           Movies
+        </a>
+
+        <!-- ✅ Toggler Button (For Small Screens) -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarNavAltMarkup" 
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" 
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+
+<!-- <button>: Defines a clickable button -->
+<!-- class="navbar-toggler": Styles the button as a Bootstrap navbar toggler (for responsive menus) -->
+<!-- type="button": Specifies the button type as a clickable button -->
+<!-- data-bs-toggle="collapse": Enables Bootstrap's collapse functionality -->
+<!-- data-bs-target="#navbarNavAltMarkup": Links this button to the element with ID "navbarNavAltMarkup" for collapsing/expanding -->
+<!-- aria-controls="navbarNavAltMarkup": Improves accessibility by indicating which element this button controls -->
+<!-- aria-expanded="false": Specifies the default collapsed state (false = collapsed, true = expanded) -->
+<!-- aria-label="Toggle navigation": Provides an accessible label for screen readers -->
+<!-- <span class="navbar-toggler-icon"></span>: Displays the default Bootstrap navbar toggler icon -->
+
+
+        <!-- ✅ Collapsible Navbar Links -->
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href=" {% url 'news' %}">News</a>
+                {% if user.is_authenticated %}
+                <a class="nav-link" href="{% url 'logoutaccount' %}">Logout({{user.username}})</a>
+                {% else %}
+                <a class="nav-link" href="{% url 'loginaccount' %}">Login</a>
+                <a class="nav-link" href="{% url 'signupaccount' %}">Sign Up</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+  </nav>
+
+<div class="container">
+    {% block content %}
+    {% endblock content %}
+</div>
+<footer class="text-center text-lg-start bg-light text-muted mt-4">
+  <!-- <footer>: Defines the footer section -->
+  <!-- class="text-center": Centers the text inside the footer -->
+  <!-- class="text-lg-start": Aligns text to the left on large screens -->
+  <!-- class="bg-light": Sets a light background color -->
+  <!-- class="text-muted": Applies a muted color to the text -->
+  <!-- class="mt-4": Adds a top margin of size 4 (Bootstrap spacing utility) -->
+
+  <div class="text-center p-4">
+      <!-- Centers the content inside the div -->
+      <!-- class="p-4": Adds padding of size 4 -->
+
+      © 2025 Copyright  
+      <!-- Displays the copyright year  
+      <!-- <a>: Creates a clickable link -->
+      <!-- class="text-reset": Prevents Bootstrap from changing the text color on hover -->
+      <!-- class="fw-bold": Makes the text bold -->
+      <!-- class="text-decoration-none": Removes the default underline -->
+      <!-- target="_blank": Opens the link in a new tab -->
+
+      <a class="text-reset fw-bold text-decoration-none"
+         target="_blank"
+         href="#">
+          Tijo Thomas
+      </a>  
+                          
+  </div>
+</footer>
+
+
+
+
+
+  <!-- ✅ Bootstrap JavaScript (Required for Navbar Toggle) -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+</body>
+</html>
