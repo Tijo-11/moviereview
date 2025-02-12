@@ -15,15 +15,38 @@
       }
     </style>
 </head>
+<style>
+  /* ✅ Fix Banner Image */
+  .banner-container {
+    width: 90%; /* Adjusted width for better alignment */
+    max-width: 1200px; /* Matches the admin panel width */
+    text-align: center;
+    margin: 0 auto 20px auto; /* Centers the banner */
+  }
+  .banner-container img {
+    width: 100%;
+    max-height: 350px; /* Adjust banner height */
+    object-fit: cover;
+  }
+
+  /* ✅ Fix Movie Poster Sizes */ 
+  .card-img-top {
+    height: 550px; /* Ensures all images have the same height */
+    object-fit: cover; /* Crops images properly */
+    width: 100%; /* Consistent width */
+  }
+  .card {
+    height: 100%; /* Ensures all cards have equal height */
+    display: flex;
+    flex-direction: column;
+  }
+  .card-body {
+    flex-grow: 1; /* Ensures content expands properly */
+  }
+</style>
 
   <!-- ✅ Navbar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
-     <!-- <nav>: Defines a navigation bar -->
-    <!-- class="navbar": Applies Bootstrap's navbar styling -->
-    <!-- class="navbar-expand-lg": Expands the navbar for large (lg) screens and collapses for smaller screens -->
-    <!-- class="navbar-light": Uses a light color scheme for text (dark text on light background) -->
-    <!-- class="bg-light": Sets a light background color for the navbar -->
-    <!-- class="mb-3": Adds a bottom margin of size 3 (Bootstrap spacing utility) -->
     <div class="container">
         <!-- Website Brand Name -->
         <a class="navbar-brand" href="{% url 'home' %}">
@@ -37,18 +60,6 @@
             aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        
-
-<!-- <button>: Defines a clickable button -->
-<!-- class="navbar-toggler": Styles the button as a Bootstrap navbar toggler (for responsive menus) -->
-<!-- type="button": Specifies the button type as a clickable button -->
-<!-- data-bs-toggle="collapse": Enables Bootstrap's collapse functionality -->
-<!-- data-bs-target="#navbarNavAltMarkup": Links this button to the element with ID "navbarNavAltMarkup" for collapsing/expanding -->
-<!-- aria-controls="navbarNavAltMarkup": Improves accessibility by indicating which element this button controls -->
-<!-- aria-expanded="false": Specifies the default collapsed state (false = collapsed, true = expanded) -->
-<!-- aria-label="Toggle navigation": Provides an accessible label for screen readers -->
-<!-- <span class="navbar-toggler-icon"></span>: Displays the default Bootstrap navbar toggler icon -->
-
 
         <!-- ✅ Collapsible Navbar Links -->
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -64,43 +75,28 @@
         </div>
     </div>
   </nav>
+ 
+  <!-- ✅ Banner Section -->
+  <div class="banner-container">
+    {% load static %}
+    <img src="{% static 'images/movie_poster.jpg' %}" alt="Banner Image">
+  </div>
 
 <div class="container">
     {% block content %}
     {% endblock content %}
 </div>
+
 <footer class="text-center text-lg-start bg-light text-muted mt-4">
-  <!-- <footer>: Defines the footer section -->
-  <!-- class="text-center": Centers the text inside the footer -->
-  <!-- class="text-lg-start": Aligns text to the left on large screens -->
-  <!-- class="bg-light": Sets a light background color -->
-  <!-- class="text-muted": Applies a muted color to the text -->
-  <!-- class="mt-4": Adds a top margin of size 4 (Bootstrap spacing utility) -->
-
   <div class="text-center p-4">
-      <!-- Centers the content inside the div -->
-      <!-- class="p-4": Adds padding of size 4 -->
-
       © 2025 Copyright  
-      <!-- Displays the copyright year  
-      <!-- <a>: Creates a clickable link -->
-      <!-- class="text-reset": Prevents Bootstrap from changing the text color on hover -->
-      <!-- class="fw-bold": Makes the text bold -->
-      <!-- class="text-decoration-none": Removes the default underline -->
-      <!-- target="_blank": Opens the link in a new tab -->
-
       <a class="text-reset fw-bold text-decoration-none"
          target="_blank"
          href="#">
           Tijo Thomas
       </a>  
-                          
   </div>
 </footer>
-
-
-
-
 
   <!-- ✅ Bootstrap JavaScript (Required for Navbar Toggle) -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

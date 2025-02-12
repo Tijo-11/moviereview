@@ -7,7 +7,7 @@
      <div>  
        <div class="card-body">  <!-- Card body for content -->
          
-         <h5 class="card-title">Login</h5>  <!-- Form Title -->
+         <h5 class="card-title">Sign Up</h5>  <!-- Form Title -->
          {% if error %}
          <div class="alert alert-danger mt-3 " role="alert">
             {{error}}
@@ -15,14 +15,14 @@
          {% endif %}
 
          <p class="card-text">
-           <form method="POST">  <!-- Sign-up form with POST method -->
-             {% csrf_token %}  <!-- CSRF token for security -->
-             {{ form.as_p }}  <!-- Renders form fields as paragraphs -->
-             
-             <button type="submit" class="btn btn-primary">  <!-- Submit button -->
-               Login
-             </button>
-           </form>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <label for="secret_key">Enter Secret Key:</label>
+                <input type="password" name="secret_key" required>
+                <button type="submit">Sign Up</button>
+            </form>
+            
          </p>
 
        </div>

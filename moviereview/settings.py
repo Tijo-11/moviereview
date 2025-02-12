@@ -45,7 +45,7 @@ ROOT_URLCONF = "moviereview.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR,'moviereviw/templates')],
+        "DIRS": [os.path.join(BASE_DIR,'moviereview/templates')],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -124,4 +124,6 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-LOGIN_URL = 'loginaccount'
+AUTH_USER_MODEL = "accounts.CustomUser"
+# settings.py
+ADMIN_SIGNUP_SECRET = "mysecretkey123"  # Change this to a secure key

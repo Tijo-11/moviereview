@@ -2,10 +2,10 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from .models import Movie, Review, MovieRequest
 from .forms import ReviewForm, MovieRequestForm
-from django.contrib.auth.decorators import login_required
+
 from django.views.decorators.cache import cache_control  # For caching control
 from django.views.decorators.cache import never_cache
-from django.http import JsonResponse
+
 
 # Create your views here.
 def home(request):
@@ -39,43 +39,17 @@ def home(request):
     })
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 def signup(request):
     email = request.GET.get('email')
     return render(request, 'signup.html', {'email':email})
 
 
-
-
-
-
-
-
-
-
-
-@login_required
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)  # Prevents caching of the page
 def details(request, movie_id):
     movie= get_object_or_404(Movie, pk=movie_id)
     reviews=Review.objects.filter(movie=movie)
     return render(request, 'detail.html', {'movie':movie,'reviews':reviews})
 
-
-@login_required
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)  # Prevents caching of the page
 def createreview(request, movie_id):
     # Get the movie object by ID or return a 404 error if not found
@@ -110,7 +84,7 @@ def createreview(request, movie_id):
                 'error': 'Invalid data submitted, please try again.'
             })
 
-@login_required
+
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)  # Prevents caching of the page
 def updatereview(request, review_id):
     # Fetch the review based on review_id, ensuring it belongs to the logged-in user
@@ -131,12 +105,11 @@ def updatereview(request, review_id):
         except ValueError:
             # Handle invalid form input and re-render the update page with an error message
             return render(request, 'updatereview.html', {'review': review, 'form': form, 'error': 'Bad data in form'})
-
-    
+        
 
 from django.shortcuts import get_object_or_404, redirect
 from .models import Review
-@login_required
+
 def deletereview(request, review_id):
     # Fetch the review, ensuring it belongs to the logged-in user
     review = get_object_or_404(Review, pk=review_id, user=request.user)

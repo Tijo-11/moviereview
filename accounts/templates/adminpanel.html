@@ -1,13 +1,113 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
 <div class="container mt-4">
-    <h2>Admin Panel</h2>
-    <p>Welcome, Admin! Use the options below to manage users and movies.</p>
+    <h2 class="mb-4">Admin Panel</h2>
 
-    <div class="list-group">
-        <a href="{% url 'manage_users' %}" class="list-group-item list-group-item-action">Manage Users</a>
-        <a href="{% url 'create_movie' %}" class="list-group-item list-group-item-action">Add New Movie</a>
+    <!-- Users Management -->
+    <div class="card mb-4">
+        <div class="card-header">User Management</div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Reviews Created</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Loop through users in backend -->
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.review_count }}</td>
+                        <td>
+                            <a href="{% url 'user_reviews' user.id %}" class="btn btn-primary btn-sm">View Reviews</a>
+                            <button class="btn btn-warning btn-sm">Block</button>
+                            <button class="btn btn-success btn-sm">Allow</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Movies Requested by Users -->
+    <div class="card mb-4">
+        <div class="card-header">User Requested Movies</div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Movie Title</th>
+                        <th>Requested By</th>
+                        <th>Posted</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Loop through requested movies in backend -->
+                    {% for movie in requested_movies %}
+                    <tr>
+                        <td>{{ movie.title }}</td>
+                        <td>{{ movie.requested_by.username }}</td>
+                        <td>
+                            <input type="checkbox" {% if movie.posted %}checked{% endif %}>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Create Movie -->
+    <div class="card mb-4">
+        <div class="card-header">Create a Movie</div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label">Title</label>
+                    <input type="text" name="title" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea name="description" class="form-control" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Create Movie</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Highest & Lowest Rated Movies -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Highest Rated Movies</div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for movie in highest_rated_movies %}
+                        <li class="list-group-item">{{ movie.title }} - {{ movie.rating }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Lowest Rated Movies</div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for movie in lowest_rated_movies %}
+                        <li class="list-group-item">{{ movie.title }} - {{ movie.rating }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
+

@@ -1,8 +1,0 @@
-*.pyc
---pycache--/
-venv
-/static/
-.env
-*.log
-dumpsql
-migrations/__pycache__/
