@@ -9,9 +9,14 @@
         <div class="col-md-8">
             <div class="card-body">
                 <h3 class="card-title">{{ movie.title }}</h3>
-                <h5 class="card-text">{{ movie.description }}</h5>
+                <h5 class="card-text">{{ movie.tagline }}</h5>
                 <p class="card-text">{{movie.synopsis}}</p>
-                <pre class="card-text">{{movie.key_details}}</pre>
+                <p class="card-text">Director: {{movie.director}}</p>
+                <p class="card-text">Writers: {{movie.writers}}</p>
+                <p class="card-text">Producers: {{movie.producer}}</p>
+                <p class="card-text">Music By: {{movie.music}}</p>
+                <p class="card-text">Editors:{{movie.editor}}</p>
+                <p class="card-text">Keycast :{{movie.keycast}}</p>
 
                 <p class="card-text">
                     {% if movie.url %}

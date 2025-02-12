@@ -3,9 +3,7 @@ from django.http import HttpResponse
 from .models import Movie, Review, MovieRequest
 from .forms import ReviewForm, MovieRequestForm
 
-from django.views.decorators.cache import cache_control  # For caching control
-from django.views.decorators.cache import never_cache
-
+from django.views.decorators.cache import cache_control, never_cache  # For caching control
 
 # Create your views here.
 def home(request):

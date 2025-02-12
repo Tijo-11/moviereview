@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h4>Create Movie</h4>
+        </div>
+        <div class="card-body">
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- Title -->
+            <div class="form-group mb-3">
+              <label for="title" class="form-label">Title</label>
+              <input 
+                type="text" 
+                id="title" 
+                name="title" 
+                class="form-control" 
+                placeholder="Enter movie title" 
+                required
+              >
+            </div>
+
+            <!-- Tagline -->
+            <div class="form-group mb-3">
+              <label for="tagline" class="form-label">Tagline</label>
+              <input 
+                type="text" 
+                id="tagline" 
+                name="tagline" 
+                class="form-control" 
+                placeholder="Enter a one-line tagline" 
+                required
+              >
+            </div>
+
+            <!-- Synopsis -->
+            <div class="form-group mb-3">
+              <label for="synopsis" class="form-label">Synopsis</label>
+              <textarea 
+                id="synopsis" 
+                name="synopsis" 
+                rows="5" 
+                class="form-control" 
+                placeholder="Write a brief description or synopsis"
+              ></textarea>
+            </div>
+
+            <!-- Director -->
+            <div class="form-group mb-3">
+              <label for="director" class="form-label">Director</label>
+              <input 
+                type="text" 
+                id="director" 
+                name="director" 
+                class="form-control" 
+                placeholder="Enter the director's name" 
+                required
+              >
+            </div>
+
+            <!-- Writers -->
+            <div class="form-group mb-3">
+              <label for="writers" class="form-label">Writers</label>
+              <input 
+                type="text" 
+                id="writers" 
+                name="writers" 
+                class="form-control" 
+                placeholder="Enter the writers' names (separated by commas)" 
+                required
+              >
+            </div>
+
+            <!-- Producer -->
+            <div class="form-group mb-3">
+              <label for="producer" class="form-label">Producer</label>
+              <input 
+                type="text" 
+                id="producer" 
+                name="producer" 
+                class="form-control" 
+                placeholder="Enter the producer's name"
+              >
+            </div>
+
+            <!-- Editor -->
+            <div class="form-group mb-3">
+              <label for="editor" class="form-label">Editor</label>
+              <input 
+                type="text" 
+                id="editor" 
+                name="editor" 
+                class="form-control" 
+                placeholder="Enter the editor's name" 
+                required
+              >
+            </div>
+
+            <!-- Music -->
+            <div class="form-group mb-3">
+              <label for="music" class="form-label">Music</label>
+              <input 
+                type="text" 
+                id="music" 
+                name="music" 
+                class="form-control" 
+                placeholder="Enter the music director's name" 
+                required
+              >
+            </div>
+
+            <!-- Cinematography -->
+            <div class="form-group mb-3">
+              <label for="cinematography" class="form-label">Cinematography</label>
+              <input 
+                type="text" 
+                id="cinematography" 
+                name="cinematography" 
+                class="form-control" 
+                placeholder="Enter the cinematographer's name" 
+                required
+              >
+            </div>
+
+            <!-- Key Cast -->
+            <div class="form-group mb-3">
+              <label for="keycast" class="form-label">Key Cast</label>
+              <textarea 
+                id="keycast" 
+                name="keycast" 
+                rows="3" 
+                class="form-control" 
+                placeholder="Enter the key cast names (separated by commas)" 
+                required
+              ></textarea>
+            </div>
+
+            <!-- Image -->
+            <div class="form-group mb-3">
+              <label for="image" class="form-label">Image</label>
+              <input 
+                type="file" 
+                id="image" 
+                name="image" 
+                class="form-control" 
+                accept="image/*"
+              >
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-end">
+              <button 
+                type="submit" 
+                class="btn btn-primary"
+              >
+                Submit
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h4>{{ page_title }}</h4> <!-- Dynamic title for Create/Update -->
+        </div>
+        <div class="card-body">
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="form-group mb-3">
+              <label for="title" class="form-label">Title</label>
+              <input 
+                type="text" 
+                id="title" 
+                name="title" 
+                class="form-control" 
+                placeholder="Enter movie title" 
+                value="{{ movie.title|default:'' }}" <!-- Pre-fill for update -->
+                required
+              >
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="tagline" class="form-label">Tagline</label>
+              <input 
+                type="text" 
+                id="tagline" 
+                name="tagline" 
+                class="form-control" 
+                placeholder="Enter a one-line tagline" 
+                value="{{ movie.tagline|default:'' }}" <!-- Pre-fill for update -->
+              >
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="synopsis" class="form-label">Synopsis/Description</label>
+              <textarea 
+                id="synopsis" 
+                name="synopsis" 
+                rows="5" 
+                class="form-control" 
+                placeholder="Write a brief description or synopsis" 
+                required
+              >{{ movie.synopsis|default:'' }}</textarea> <!-- Pre-fill for update -->
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="director" class="form-label">Director</label>
+              <input 
+                type="text" 
+                id="director" 
+                name="director" 
+                class="form-control" 
+                placeholder="Enter the director's name" 
+                value="{{ movie.director|default:'' }}" <!-- Pre-fill for update -->
+              >
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="writer" class="form-label">Writer</label>
+              <input 
+                type="text" 
+                id="writer" 
+                name="writer" 
+                class="form-control" 
+                placeholder="Enter the writer's name" 
+                value="{{ movie.writer|default:'' }}" <!-- Pre-fill for update -->
+              >
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="producer" class="form-label">Producer</label>
+              <input 
+                type="text" 
+                id="producer" 
+                name="producer" 
+                class="form-control" 
+                placeholder="Enter the producer's name" 
+                value="{{ movie.producer|default:'' }}" <!-- Pre-fill for update -->
+              >
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="editor" class="form-label">Editor</label>
+              <input 
+                type="text" 
+                id="editor" 
+                name="editor" 
+                class="form-control" 
+                placeholder="Enter the editor's name" 
+                value="{{ movie.editor|default:'' }}" <!-- Pre-fill for update -->
+              >
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="music" class="form-label">Music</label>
+              <input 
+                type="text" 
+                id="music" 
+                name="music" 
+                class="form-control" 
+                placeholder="Enter the music director's name" 
+                value="{{ movie.music|default:'' }}" <!-- Pre-fill for update -->
+              >
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="cinematographer" class="form-label">Cinematographer</label>
+              <input 
+                type="text" 
+                id="cinematographer" 
+                name="cinematographer" 
+                class="form-control" 
+                placeholder="Enter the cinematographer's name" 
+                value="{{ movie.cinematographer|default:'' }}" <!-- Pre-fill for update -->
+              >
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="key_cast" class="form-label">Key Cast</label>
+              <textarea 
+                id="key_cast" 
+                name="key_cast" 
+                rows="3" 
+                class="form-control" 
+                placeholder="Enter the key cast names (separated by commas)"
+              >{{ movie.key_cast|default:'' }}</textarea> <!-- Pre-fill for update -->
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="image" class="form-label">Image</label>
+              <input 
+                type="file" 
+                id="image" 
+                name="image" 
+                class="form-control" 
+                accept="image/*"
+              >
+              {% if movie.image %}
+              <p class="mt-2">Current Image: <img src="{{ movie.image.url }}" alt="Movie Image" style="width: 150px;"></p>
+              {% endif %}
+            </div>
+
+            <div class="text-end">
+              <button 
+                type="submit" 
+                class="btn btn-primary"
+              >
+                {{ button_text }} <!-- Dynamic button text for Create/Update -->
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

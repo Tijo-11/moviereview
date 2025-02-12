@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import UserCreateForm, AdminSignupForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
@@ -11,6 +11,7 @@ from django.views.decorators.cache import cache_control
 from django.conf import settings  
 from .models import CustomUser  # ✅ Import CustomUser
 from django.contrib.auth.decorators import user_passes_test
+
 
 # ✅ Normal User Signup (Uses CustomUser)
 def signupaccount(request):
@@ -86,10 +87,6 @@ def logoutaccount(request):
     logout(request)
     return redirect('home')
 
-
-
-
-
 # Invite-Only Admin Signup
 def admin_signup(request):
     if request.method == 'GET':
@@ -113,7 +110,7 @@ def admin_signup(request):
             return render(request, 'adminsignup.html', {'form': AdminSignupForm()})
 
 
-# ✅ Admin Login
+#  Admin Login
 def admin_login(request):
     if request.method == 'GET':
         return render(request, 'adminlogin.html', {'form': AuthenticationForm()})
@@ -144,6 +141,7 @@ def admin_login(request):
 
 
 
+from movie.models import MovieRequest
 
 # ✅ Check if the user is an admin
 def admin_required(login_url=None):
@@ -158,5 +156,89 @@ def admin_required(login_url=None):
 # ✅ Admin Panel View (Redirect to adminlogin)
 @admin_required(login_url='adminlogin')  # Redirect to admin_login if not authenticated as admin
 def adminpanel(request):
-    return render(request, 'adminpanel.html')
+    # Fetch all movie requests
+    movie_requests = MovieRequest.objects.all()  # Adjust the query as needed
+    # Fetch all non-admin users
+    non_admin_users = CustomUser.objects.filter(is_admin=False).order_by('date_joined')  # Ordered by joining date
+    movies = Movie.objects.all()  # Fetch all movies
+    
+    # Pass the movie requests to the admin panel template
+    return render(request,
+                  'adminpanel.html',
+                  {'movie_requests': movie_requests,
+                'non_admin_users': non_admin_users, 'movies': movies})
+
+def block_user(request, user_id):
+    # Fetch the user and block them
+    user = get_object_or_404(CustomUser, id=user_id)
+    user.is_active = False  # Set status to blocked
+    user.save()
+    return redirect('adminpanel')  # Redirect back to admin panel
+
+def allow_user(request, user_id):
+    # Fetch the user and allow them
+    user = get_object_or_404(CustomUser, id=user_id)
+    user.is_active = True  # Set status to allowed
+    user.save()
+    return redirect('adminpanel')  # Redirect back to admin panel
+
+
+###Create movie and save
+from movie.models import Movie
+
+def createmovie(request):
+    if request.method == "POST":
+        # Retrieve data from the form
+        title = request.POST.get("title")
+        producer = request.POST.get("producer")
+        synopsis = request.POST.get("synopsis")
+        tagline = request.POST.get("tagline")
+        director = request.POST.get("director")
+        writers = request.POST.get("writers")
+        editor = request.POST.get("editor")
+        music = request.POST.get("music")
+        cinematography = request.POST.get("cinematography")
+        keycast = request.POST.get("keycast")
+        image = request.FILES.get("image")  # For image file
+
+        # Save the movie to the database
+        Movie.objects.create(
+            title=title,
+            producer=producer,
+            synopsis=synopsis,
+            tagline=tagline,
+            director=director,
+            writers=writers,
+            editor=editor,
+            music=music,
+            cinematography=cinematography,
+            keycast=keycast,
+            image=image,
+        )
+        messages.success(request, "Movie created successfully!")
+        return redirect("adminpanel")  # Redirect to the admin panel
+    return render(request, "createmovie.html")  # Render movie creation form
+
+
+
+
+
+from django.shortcuts import get_object_or_404, redirect
+from movie.models import Movie
+
+# Update Movie
+def updatemovie(request, movie_id):
+    movie = get_object_or_404(Movie, id=movie_id)
+    if request.method == 'POST':
+        movie.title = request.POST.get('title')
+        movie.producer = request.POST.get('producer')
+        movie.save()
+        return redirect('adminpanel')
+    return render(request, 'updatemovie.html', {'movie': movie})
+
+# Delete Movie
+def deletemovie(request, movie_id):
+    movie = get_object_or_404(Movie, id=movie_id)
+    movie.delete()
+    return redirect('adminpanel')
 

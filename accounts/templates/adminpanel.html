@@ -6,54 +6,41 @@
 
     <!-- Users Management -->
     <div class="card mb-4">
-        <div class="card-header">User Management</div>
+        <div class="card-header">User Details</div>
         <div class="card-body">
             <table class="table">
                 <thead>
                     <tr>
-                        <th>User</th>
-                        <th>Reviews Created</th>
-                        <th>Actions</th>
+                        <th>#</th>
+                        <th>Full Name</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Date Joined</th>
+                        <th>Status</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Loop through users in backend -->
-                    {% for user in users %}
+                    {% for user in non_admin_users %}
                     <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ user.full_name }}</td>
                         <td>{{ user.username }}</td>
-                        <td>{{ user.review_count }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.date_joined }}</td>
                         <td>
-                            <a href="{% url 'user_reviews' user.id %}" class="btn btn-primary btn-sm">View Reviews</a>
-                            <button class="btn btn-warning btn-sm">Block</button>
-                            <button class="btn btn-success btn-sm">Allow</button>
+                            {% if user.is_active %}
+                            <span class="badge bg-success">Allowed</span>
+                            {% else %}
+                            <span class="badge bg-danger">Blocked</span>
+                            {% endif %}
                         </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- Movies Requested by Users -->
-    <div class="card mb-4">
-        <div class="card-header">User Requested Movies</div>
-        <div class="card-body">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Movie Title</th>
-                        <th>Requested By</th>
-                        <th>Posted</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Loop through requested movies in backend -->
-                    {% for movie in requested_movies %}
-                    <tr>
-                        <td>{{ movie.title }}</td>
-                        <td>{{ movie.requested_by.username }}</td>
                         <td>
-                            <input type="checkbox" {% if movie.posted %}checked{% endif %}>
+                            {% if user.is_active %}
+                            <a href="{% url 'block_user' user.id %}" class="btn btn-danger btn-sm">Block</a>
+                            {% else %}
+                            <a href="{% url 'allow_user' user.id %}" class="btn btn-success btn-sm">Allow</a>
+                            {% endif %}
                         </td>
                     </tr>
                     {% endfor %}
@@ -63,51 +50,47 @@
     </div>
 
     <!-- Create Movie -->
-    <div class="card mb-4">
-        <div class="card-header">Create a Movie</div>
-        <div class="card-body">
-            <form method="post">
-                {% csrf_token %}
-                <div class="mb-3">
-                    <label class="form-label">Title</label>
-                    <input type="text" name="title" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Description</label>
-                    <textarea name="description" class="form-control" rows="3" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Create Movie</button>
-            </form>
-        </div>
+    <div class="mb-3">
+        <a href="{% url 'createmovie' %}" class="btn btn-primary">Create Movie</a>
     </div>
 
-    <!-- Highest & Lowest Rated Movies -->
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">Highest Rated Movies</div>
-                <div class="card-body">
-                    <ul class="list-group">
-                        {% for movie in highest_rated_movies %}
-                        <li class="list-group-item">{{ movie.title }} - {{ movie.rating }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
+    <!-- Movies Table -->
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4>All Movies</h4>
         </div>
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">Lowest Rated Movies</div>
-                <div class="card-body">
-                    <ul class="list-group">
-                        {% for movie in lowest_rated_movies %}
-                        <li class="list-group-item">{{ movie.title }} - {{ movie.rating }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
+        <div class="card-body">
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>Director</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for movie in movies %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ movie.title }}</td>
+                        <td>{{ movie.director }}</td>
+                        <td>
+                            <a href="{% url 'updatemovie' movie.id %}" class="btn btn-warning btn-sm">Update</a>
+                            <a href="{% url 'deletemovie' movie.id %}" class="btn btn-danger btn-sm"
+                               onclick="return confirm('Are you sure you want to delete this movie?');">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center">No movies found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
 {% endblock %}
-

@@ -27,7 +27,7 @@
               <a href="{% url 'detail' movie.id %}">
                 <h2 class="card-title fw-bold">{{ movie.title }}</h2>
               </a>
-              <p class="card-text">{{ movie.description }}</p>
+              <p class="card-text">{{ movie.tagline }}</p>
               {% if movie.url %}
                 <a href="{{ movie.url }}" class="btn btn-primary">Movie Link</a>
               {% endif %}
