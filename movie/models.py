@@ -18,6 +18,8 @@ class Movie(models.Model):
     keycast=models.CharField(max_length=1000)
     
     image=models.ImageField(upload_to='movie/images/')
+    
+    
 class Review(models.Model):
     STAR_CHOICES = [(i, str(i)) for i in range(1, 11)] # Choices from 1 to 10
     text=models.CharField(max_length=2000)

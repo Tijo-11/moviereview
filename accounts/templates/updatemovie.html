@@ -6,12 +6,13 @@
     <div class="col-md-8">
       <div class="card">
         <div class="card-header bg-primary text-white">
-          <h4>{{ page_title }}</h4> <!-- Dynamic title for Create/Update -->
+          <h4>Update Movie</h4>
         </div>
         <div class="card-body">
           <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
 
+            <!-- Title -->
             <div class="form-group mb-3">
               <label for="title" class="form-label">Title</label>
               <input 
@@ -20,11 +21,12 @@
                 name="title" 
                 class="form-control" 
                 placeholder="Enter movie title" 
-                value="{{ movie.title|default:'' }}" <!-- Pre-fill for update -->
+                value="{{ movie.title|default:'' }}" 
                 required
               >
             </div>
 
+            <!-- Tagline -->
             <div class="form-group mb-3">
               <label for="tagline" class="form-label">Tagline</label>
               <input 
@@ -33,12 +35,14 @@
                 name="tagline" 
                 class="form-control" 
                 placeholder="Enter a one-line tagline" 
-                value="{{ movie.tagline|default:'' }}" <!-- Pre-fill for update -->
+                value="{{ movie.tagline|default:'' }}" 
+                required
               >
             </div>
 
+            <!-- Synopsis -->
             <div class="form-group mb-3">
-              <label for="synopsis" class="form-label">Synopsis/Description</label>
+              <label for="synopsis" class="form-label">Synopsis</label>
               <textarea 
                 id="synopsis" 
                 name="synopsis" 
@@ -46,9 +50,10 @@
                 class="form-control" 
                 placeholder="Write a brief description or synopsis" 
                 required
-              >{{ movie.synopsis|default:'' }}</textarea> <!-- Pre-fill for update -->
+              >{{ movie.synopsis|default:'' }}</textarea>
             </div>
 
+            <!-- Director -->
             <div class="form-group mb-3">
               <label for="director" class="form-label">Director</label>
               <input 
@@ -57,22 +62,26 @@
                 name="director" 
                 class="form-control" 
                 placeholder="Enter the director's name" 
-                value="{{ movie.director|default:'' }}" <!-- Pre-fill for update -->
+                value="{{ movie.director|default:'' }}" 
+                required
               >
             </div>
 
+            <!-- Writers -->
             <div class="form-group mb-3">
-              <label for="writer" class="form-label">Writer</label>
+              <label for="writers" class="form-label">Writers</label>
               <input 
                 type="text" 
-                id="writer" 
-                name="writer" 
+                id="writers" 
+                name="writers" 
                 class="form-control" 
-                placeholder="Enter the writer's name" 
-                value="{{ movie.writer|default:'' }}" <!-- Pre-fill for update -->
+                placeholder="Enter the writers' names (separated by commas)" 
+                value="{{ movie.writers|default:'' }}" 
+                required
               >
             </div>
 
+            <!-- Producer -->
             <div class="form-group mb-3">
               <label for="producer" class="form-label">Producer</label>
               <input 
@@ -81,10 +90,11 @@
                 name="producer" 
                 class="form-control" 
                 placeholder="Enter the producer's name" 
-                value="{{ movie.producer|default:'' }}" <!-- Pre-fill for update -->
+                value="{{ movie.producer|default:'' }}"
               >
             </div>
 
+            <!-- Editor -->
             <div class="form-group mb-3">
               <label for="editor" class="form-label">Editor</label>
               <input 
@@ -93,10 +103,12 @@
                 name="editor" 
                 class="form-control" 
                 placeholder="Enter the editor's name" 
-                value="{{ movie.editor|default:'' }}" <!-- Pre-fill for update -->
+                value="{{ movie.editor|default:'' }}" 
+                required
               >
             </div>
 
+            <!-- Music -->
             <div class="form-group mb-3">
               <label for="music" class="form-label">Music</label>
               <input 
@@ -105,33 +117,39 @@
                 name="music" 
                 class="form-control" 
                 placeholder="Enter the music director's name" 
-                value="{{ movie.music|default:'' }}" <!-- Pre-fill for update -->
+                value="{{ movie.music|default:'' }}" 
+                required
               >
             </div>
 
+            <!-- Cinematography -->
             <div class="form-group mb-3">
-              <label for="cinematographer" class="form-label">Cinematographer</label>
+              <label for="cinematography" class="form-label">Cinematography</label>
               <input 
                 type="text" 
-                id="cinematographer" 
-                name="cinematographer" 
+                id="cinematography" 
+                name="cinematography" 
                 class="form-control" 
                 placeholder="Enter the cinematographer's name" 
-                value="{{ movie.cinematographer|default:'' }}" <!-- Pre-fill for update -->
+                value="{{ movie.cinematography|default:'' }}" 
+                required
               >
             </div>
 
+            <!-- Key Cast -->
             <div class="form-group mb-3">
-              <label for="key_cast" class="form-label">Key Cast</label>
+              <label for="keycast" class="form-label">Key Cast</label>
               <textarea 
-                id="key_cast" 
-                name="key_cast" 
+                id="keycast" 
+                name="keycast" 
                 rows="3" 
                 class="form-control" 
-                placeholder="Enter the key cast names (separated by commas)"
-              >{{ movie.key_cast|default:'' }}</textarea> <!-- Pre-fill for update -->
+                placeholder="Enter the key cast names (separated by commas)" 
+                required
+              >{{ movie.keycast|default:'' }}</textarea>
             </div>
 
+            <!-- Image -->
             <div class="form-group mb-3">
               <label for="image" class="form-label">Image</label>
               <input 
@@ -146,14 +164,16 @@
               {% endif %}
             </div>
 
+            <!-- Submit Button -->
             <div class="text-end">
               <button 
                 type="submit" 
                 class="btn btn-primary"
               >
-                {{ button_text }} <!-- Dynamic button text for Create/Update -->
+                Update
               </button>
             </div>
+
           </form>
         </div>
       </div>

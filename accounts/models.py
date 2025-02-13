@@ -38,8 +38,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     objects = CustomUserManager()
 
     # Set email as the unique identifier instead of username
-    USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["username", "full_name"]
+    USERNAME_FIELD = "username"
+    REQUIRED_FIELDS = ["email", "full_name"]
 
     def __str__(self):
         return self.username

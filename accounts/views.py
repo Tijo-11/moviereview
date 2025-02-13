@@ -67,7 +67,14 @@ def loginaccount(request):
                 'form': AuthenticationForm(),
                 'error': 'Incorrect password'
             })
-
+        # Check if the user is active (not blocked)
+        if not user.is_active:
+            return render(request, 'loginaccount.html', {
+                'form': AuthenticationForm(),
+                'error': 'Your account is blocked. Please contact the admin.'
+            })
+        
+        
         # Check if the user is an admin
         if user.is_admin:
             return render(request, 'loginaccount.html', {
@@ -111,6 +118,7 @@ def admin_signup(request):
 
 
 #  Admin Login
+@never_cache
 def admin_login(request):
     if request.method == 'GET':
         return render(request, 'adminlogin.html', {'form': AuthenticationForm()})
@@ -154,6 +162,7 @@ def admin_required(login_url=None):
 
 
 # ✅ Admin Panel View (Redirect to adminlogin)
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)  
 @admin_required(login_url='adminlogin')  # Redirect to admin_login if not authenticated as admin
 def adminpanel(request):
     # Fetch all movie requests
@@ -185,7 +194,8 @@ def allow_user(request, user_id):
 
 ###Create movie and save
 from movie.models import Movie
-
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)  
+@admin_required(login_url='adminlogin')  # Redirect to admin_login if not authenticated as admin
 def createmovie(request):
     if request.method == "POST":
         # Retrieve data from the form
@@ -227,6 +237,8 @@ from django.shortcuts import get_object_or_404, redirect
 from movie.models import Movie
 
 # Update Movie
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)  
+@admin_required(login_url='adminlogin')  # Redirect to admin_login if not authenticated as admin
 def updatemovie(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)
     if request.method == 'POST':

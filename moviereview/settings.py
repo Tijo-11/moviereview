@@ -127,3 +127,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "accounts.CustomUser"
 # settings.py
 ADMIN_SIGNUP_SECRET = "mysecretkey123"  # Change this to a secure key
+
+SESSION_COOKIE_AGE = 1800  # 30 minutes (time in seconds)
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Session ends when browser closes
+SESSION_SAVE_EVERY_REQUEST = True  # Reset timeout with each request
+

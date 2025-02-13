@@ -1,7 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseForbidden
 from .models import Movie, Review, MovieRequest
 from .forms import ReviewForm, MovieRequestForm
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 from django.views.decorators.cache import cache_control, never_cache  # For caching control
 
@@ -41,9 +43,14 @@ def signup(request):
     email = request.GET.get('email')
     return render(request, 'signup.html', {'email':email})
 
-
+@login_required
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)  # Prevents caching of the page
 def details(request, movie_id):
+    if request.user.is_authenticated:
+        if request.user.is_admin:
+            return HttpResponseForbidden("Admins are not allowed to access this page.")
+        if not request.user.is_active:  # Blocked user
+            return HttpResponseForbidden("Your account is blocked. Please contact the admin.")
     movie= get_object_or_404(Movie, pk=movie_id)
     reviews=Review.objects.filter(movie=movie)
     return render(request, 'detail.html', {'movie':movie,'reviews':reviews})
