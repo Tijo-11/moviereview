@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Review Home Page</title>
+
+    <!-- ✅ Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+          rel="stylesheet" 
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
+          crossorigin="anonymous">
+
+    <style>
+        /* Banner Container with Aspect Ratio */
+        .banner-container {
+            position: relative;
+            width: 100%; /* Full width */
+            height: auto; /* Allow height to adjust dynamically */
+            min-height: 80vh; /* Minimum height for large screens */
+            background-image: url("{% static 'images/movie_poster2.jpg' %}");
+            background-size: contain; /* Maintain aspect ratio of the image */
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Overlay for Dull Background */
+        .banner-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+            z-index: 1;
+        }
+
+        /* Centered Text Styling */
+        .banner-text {
+            position: absolute;
+            z-index: 2; /* Above the overlay */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #FFC107; /* Mango-yellow color */
+            font-size: 3rem;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9); /* Strong shadow for readability */
+        }
+
+        /* Responsive Font Size */
+        @media (max-width: 768px) {
+            .banner-text {
+                font-size: 2rem; /* Smaller font size for smaller screens */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">Movies</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNavAltMarkup" 
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" 
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav ms-auto">
+                    <a class="nav-link" href="{% url 'news' %}">News</a>
+                    <a class="nav-link" href="{% url 'loginaccount' %}">Login</a>
+                    <a class="nav-link" href="{% url 'signupaccount' %}">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Banner Section -->
+    <div class="banner-container">
+        <div class="banner-text">
+            Welcome to The Movie Review Page
+        </div>
+    </div>
+
+    <!-- Page Content -->
+    <div class="container mt-5">
+        <h2>Explore the world of movies and the Critic inside you!</h2>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center text-lg-start bg-light text-muted mt-4">
+        <div class="text-center p-4">
+            © 2025 Copyright  
+            <a class="text-reset fw-bold text-decoration-none" target="_blank" href="#">Tijo Thomas</a>  
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-TW6DpwJr8PhjA7IF6Ie7trCBEMHPkRb4UvdKK2IhHJoNEkgImMFa7D95wihu7yW9" 
+            crossorigin="anonymous"></script>
+</body>
+</html>

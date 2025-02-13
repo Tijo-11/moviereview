@@ -6,8 +6,13 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 from django.views.decorators.cache import cache_control, never_cache  # For caching control
-
+def index(request):
+    return render(request, 'index.html')
+    
+    
 # Create your views here.
+@login_required
+@cache_control(no_cache=True, must_revalidate=True, no_store=True) 
 def home(request):
     searchTerm = request.GET.get('searchMovie')
     message = ""
